@@ -5,6 +5,8 @@ service MainEndpoint {
 	rpc RegisterUser (RegistrationRequest) returns (RegistrationResponse) {}
 	rpc LoginUser(LoginRequest) returns (LoginResponse) {}
 	rpc FindBird(FindBirdRequest) returns (FindBirdResponse) {}
+	rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {}
+	rpc SubscribeToNewMessages(Empty) returns (stream ChatMessage) {}
 }
 
 message RegistrationRequest {
@@ -36,6 +38,8 @@ message LoginResponse {
 	}
 	Result result = 1;
 }
+
+message Empty {}
 
 message Timestamp {
 	// Represents seconds of UTC time since Unix epoch
@@ -77,4 +81,17 @@ message FindBirdResponse {
 	}
 	Result res = 1;
 	BirdInfo info = 2;
+}
+
+message SendMessageRequest {
+	string text_content = 1;
+}
+message SendMessageResponse {
+	Timestamp server_time = 1;
+}
+
+message ChatMessage {
+	string sender_email = 1;
+	Timestamp message_time = 2;
+	string text = 3;
 }
