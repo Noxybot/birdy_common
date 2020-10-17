@@ -34,7 +34,7 @@ message LoginResponse {
 	enum Result {
 		OK = 0;
 		WRONG_PASSWORD = 1;
-		LOGIN_NOT_FOUND = 3;
+		LOGIN_NOT_FOUND = 2;
 	}
 	Result result = 1;
 }
@@ -54,25 +54,35 @@ message Timestamp {
 	int32 nanos = 2;
 }
 
-message BirdInfo {
+message UserBirdInfo {
 	message Point {
-		double latitude = 1;
-		double longitude = 2;
+		double longitude = 1;
+		double latitude = 2;
 	}
 	Point found_point = 1;
 	Timestamp found_time = 2;
 	string finder_email = 3;
-	bytes photo = 4;
+	EncyclopedicBirdInfo info = 4;
 	bytes sound = 5;
+}
+
+message EncyclopedicBirdInfo {
+	bytes photo = 1;
+	string name = 2;
+	string description = 3;
 }
 
 message FindBirdRequest {
 	enum FindType{
 		BY_PHOTO = 0;
 		BY_SOUND = 1;
+		BY_NAME = 2;
 	}
 	FindType type = 1;
-	bytes data = 2;
+	oneof data {
+		bytes media = 2;
+		string name = 3;
+	}
 }
 message FindBirdResponse {
 	enum Result {
@@ -80,7 +90,10 @@ message FindBirdResponse {
 		NOT_FOUND = 1;
 	}
 	Result res = 1;
-	BirdInfo info = 2;
+	oneof data {
+		EncyclopedicBirdInfo enc_info = 2;
+		UserBirdInfo user_info = 3;
+	}
 }
 
 message SendMessageRequest {
