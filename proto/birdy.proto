@@ -10,6 +10,7 @@ service MainEndpoint {
 	rpc AddBirdWithData(AddBirdWithDataRequest) returns (AddBirdWithDataResponse) {}
 	rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {}
 	rpc SubscribeToNewMessages(Empty) returns (stream ChatMessage) {}
+	rpc UpdateUser(UserInfo) returns (Empty) {}
 }
 
 message UserInfo{
