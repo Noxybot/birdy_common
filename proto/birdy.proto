@@ -11,6 +11,11 @@ service MainEndpoint {
 	rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {}
 	rpc SubscribeToNewMessages(Empty) returns (stream ChatMessage) {}
 	rpc UpdateUser(UserInfo) returns (Empty) {}
+	rpc GetTopBirds(GetTopBirdsRequest) returns (stream EncyclopedicBirdInfo) {}
+}
+
+message GetTopBirdsRequest{
+	int32 count = 1;
 }
 
 message UserInfo{
